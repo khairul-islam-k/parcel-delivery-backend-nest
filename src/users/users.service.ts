@@ -31,13 +31,20 @@ export class UsersService {
     });
   }
 
+  async findByEmail(email: string) {
+    console.log(email);
+    return this.prisma.prismaClient.user.findUnique({
+      where: { email },
+    });
+  }
+
   async registration(body: UserRegistration) {
     const { password, ...resData } = body;
-    const user = await this.prisma.prismaClient.user.findMany({
+    const user = await this.prisma.prismaClient.user.findUnique({
       where: { email: body.email },
     });
 
-    if (user[0]) {
+    if (user) {
       return {
         id: false,
         success: false,
@@ -60,21 +67,21 @@ export class UsersService {
 
   async loginPoint(body: TLogin) {
     const { email, password } = body;
-    const user = await this.prisma.prismaClient.user.findMany({
+    const user = await this.prisma.prismaClient.user.findUnique({
       where: { email },
     });
 
-    if (!user[0]) {
+    if (!user) {
       return null;
     }
 
-    if (!user[0]?.password) {
+    if (!user?.password) {
       return null;
     }
 
-    const isPassword = await bcrypt.compare(password, user[0].password);
+    const isPassword = await bcrypt.compare(password, user.password);
     if (isPassword) {
-      return user[0];
+      return user;
     } else {
       return null;
     }

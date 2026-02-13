@@ -17,7 +17,7 @@ model User {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   provider          String?
   providerAccountId String?
-  email             String
+  email             String @unique
   name              String?
   image             String
   password          String?
