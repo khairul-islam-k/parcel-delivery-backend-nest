@@ -81,7 +81,7 @@ export class UsersService {
 
     const isPassword = await bcrypt.compare(password, user[0].password);
     if (isPassword) {
-      return user;
+      return user[0];
     } else {
       return null;
     }
