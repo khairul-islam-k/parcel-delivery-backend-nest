@@ -25,3 +25,10 @@ model User {
   createAt DateTime @default(now())
   updateAt DateTime @default(now()) @updatedAt
 }
+
+model Partner {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  logo       String
+  description String
+}

@@ -22,25 +22,25 @@ export class UsersService {
   constructor(private readonly prisma: PrismaService) {}
 
   async findAll() {
-    return await this.prisma.prismaClient.user.findMany();
+    return await this.prisma.user.findMany();
   }
 
   async findOne(id: string) {
-    return await this.prisma.prismaClient.user.findMany({
+    return await this.prisma.user.findMany({
       where: { providerAccountId: id },
     });
   }
 
   async findByEmail(email: string) {
     console.log(email);
-    return this.prisma.prismaClient.user.findMany({
+    return this.prisma.user.findMany({
       where: { email },
     });
   }
 
   async registration(body: UserRegistration) {
     const { password, ...resData } = body;
-    const user = await this.prisma.prismaClient.user.findMany({
+    const user = await this.prisma.user.findMany({
       where: { email: body.email },
     });
 
@@ -54,20 +54,20 @@ export class UsersService {
     const hashPassword = await bcrypt.hash(password, 10);
     const newData = { password: hashPassword, ...resData };
 
-    return await this.prisma.prismaClient.user.create({
+    return await this.prisma.user.create({
       data: newData,
     });
   }
 
   async socialRegister(body: UserRegistration) {
-    return this.prisma.prismaClient.user.create({
+    return this.prisma.user.create({
       data: body,
     });
   }
 
   async loginPoint(body: TLogin) {
     const { email, password } = body;
-    const user = await this.prisma.prismaClient.user.findMany({
+    const user = await this.prisma.user.findMany({
       where: { email },
     });
 
