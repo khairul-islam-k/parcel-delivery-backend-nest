@@ -32,3 +32,37 @@ model Partner {
   logo       String
   description String
 }
+
+model Parcel {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+
+  payment_status       PaymentStatus @default(UNPAID)
+
+  title                String?
+  type                 String
+  weight               String?
+  cost                 Float
+
+  sender_name          String
+  sender_contact       String?
+  sender_region        String
+  sender_center        String
+  sender_address       String?
+  pickup_instruction   String?
+
+  receiver_name        String?
+  receiver_contact     String?
+  receiver_region      String
+  receiver_center      String
+  receiver_address     String?
+  delivery_instruction String?
+  email                String
+
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+}
+
+enum PaymentStatus {
+  PAID
+  UNPAID
+}
