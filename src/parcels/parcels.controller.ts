@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { ParcelsService } from './parcels.service';
 
 interface TParcel {
@@ -24,6 +24,11 @@ interface TParcel {
 @Controller('parcels')
 export class ParcelsController {
   constructor(private readonly parcelsService: ParcelsService) {}
+
+  @Get('findBy/:email')
+  findByEmail(@Param('email') email: string) {
+    return this.parcelsService.findByEmail(email);
+  }
 
   @Post('sendParcel')
   sendParcel(@Body() body: TParcel) {

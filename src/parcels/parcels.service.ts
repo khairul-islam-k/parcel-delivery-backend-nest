@@ -25,6 +25,12 @@ interface TParcel {
 export class ParcelsService {
   constructor(private readonly prisma: PrismaService) {}
 
+  async findByEmail(email: string) {
+    return await this.prisma.parcel.findMany({
+      where: { email },
+    });
+  }
+
   async sendParcel(body: TParcel) {
     return await this.prisma.parcel.create({
       data: body,
