@@ -23,11 +23,14 @@ interface TParcel {
 
 @Injectable()
 export class ParcelsService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
 
   async findByEmail(email: string) {
     return await this.prisma.parcel.findMany({
       where: { email },
+      orderBy: {
+        createdAt: 'desc',
+      },
     });
   }
 
