@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { ParcelsService } from './parcels.service';
 
 interface TParcel {
@@ -33,5 +33,10 @@ export class ParcelsController {
   @Post('sendParcel')
   sendParcel(@Body() body: TParcel) {
     return this.parcelsService.sendParcel(body);
+  }
+
+  @Delete('deleteById/:id')
+  deleteById(@Param('id') id: string) {
+    return this.parcelsService.deleteById(id);
   }
 }

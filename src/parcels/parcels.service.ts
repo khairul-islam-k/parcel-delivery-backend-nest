@@ -23,7 +23,7 @@ interface TParcel {
 
 @Injectable()
 export class ParcelsService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   async findByEmail(email: string) {
     return await this.prisma.parcel.findMany({
@@ -37,6 +37,12 @@ export class ParcelsService {
   async sendParcel(body: TParcel) {
     return await this.prisma.parcel.create({
       data: body,
+    });
+  }
+
+  async deleteById(id: string) {
+    return await this.prisma.parcel.delete({
+      where: { id },
     });
   }
 }
